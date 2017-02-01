@@ -1,10 +1,13 @@
-//include gulp, sass, browserSync, autoprefixer, gulp-clean, gulp-concat
+//include gulp, sass, browserSync, autoprefixer, gulp-clean, gulp-concat, browserify
+//install jquery,bootstrap and mustache via npm install --save-dev XXX
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync');
 var autoprefixer = require('gulp-autoprefixer');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
+var browserify = require('gulp-browserify');
+var merge = require('merge-stream');
 var reload = browserSync.reload;
 
 //setup sourcepaths and app path so don't need to keep typing them
@@ -20,10 +23,11 @@ var APPPATH = {
   js: 'app/js'
 }
 
-//copy js files and delete them if deleted from source
+//copy js files and delete them if deleted from source, also conact them into one and include the required files install via npm
 gulp.task('scripts', ['clean-scripts'], function() {
   return gulp.src(SOURCEPATHS.jsSource)
     .pipe(concat('main.js'))
+    .pipe(browserify())
     .pipe(gulp.dest(APPPATH.js));
 });
 
@@ -40,11 +44,17 @@ gulp.task('clean-scripts', function() {
 });
 
 //setup sass task to conver scss to css and autoprefixer will add -webkit-(etc) prefixes for CSS3 where needed!
+//merge sass and bootstrap files and concat into app.css
 gulp.task('sass', function() {
-  return gulp.src(SOURCEPATHS.sassSource)
+  var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
+  var sassFiles;
+  sassFiles = gulp.src(SOURCEPATHS.sassSource)
     .pipe(autoprefixer())
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-    .pipe(gulp.dest(APPPATH.css));
+
+    return merge(sassFiles, bootstrapCSS)
+      .pipe(concat('app.css'))
+      .pipe(gulp.dest(APPPATH.css));
 });
 
 //copy any html files from source to app and delete them if deleted from source
