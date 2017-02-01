@@ -8,20 +8,24 @@ var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var browserify = require('gulp-browserify');
 var merge = require('merge-stream');
+var newer = require('gulp-newer');
+var imagemin = require('gulp-imagemin');
 var reload = browserSync.reload;
 
 //setup sourcepaths and app path so don't need to keep typing them
 var SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
   htmlSource: 'src/*.html',
-  jsSource: 'src/js/*.js'
+  jsSource: 'src/js/**',
+  imgSource: 'src/img/**'
 }
 
 var APPPATH = {
   root: 'app/',
   css: 'app/css',
   js: 'app/js',
-  fonts: 'app/fonts'
+  fonts: 'app/fonts',
+  img: 'app/img'
 }
 
 //copy js files and delete them if deleted from source, also conact them into one and include the required files install via npm
@@ -58,6 +62,15 @@ gulp.task('sass', function() {
       .pipe(gulp.dest(APPPATH.css));
 });
 
+//checks for newer images in the cource folder, minifies them then copies them to app
+gulp.task('images', function() {
+  return gulp.src(SOURCEPATHS.imgSource)
+    .pipe(newer(APPPATH.img))
+    .pipe(imagemin())
+    .pipe(gulp.dest(APPPATH.img));
+});
+
+
 //copy the fonts folder
 gulp.task('moveFonts', function() {
   gulp.src('./node_modules/bootstrap/dist/fonts/*.{eot,svg,ttf,woff,woff2}')
@@ -80,10 +93,10 @@ gulp.task('serve', ['sass'], function() {
 });
 
 //setup watch task to update the server if any sass files change - server will automatically update html changes
-gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts'], function() {
+gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts','images'], function() {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
   gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
-  gulp.watch([SOURCEPATHS.jsSource], ['scripts']);    
+  gulp.watch([SOURCEPATHS.jsSource], ['scripts']);  
 
 });
 

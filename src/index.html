@@ -10,8 +10,8 @@
     <div class="row">
       <div id="slider" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
-            <li data-target="#slider" data-ride-to="0" class="active"></li>
-            <li data-target="#slider" data-ride-to="1"></li>
+            <li data-target="#slider" data-slide-to="0" class="active"></li>
+            <li data-target="#slider" data-slide-to="1"></li>
           </ol>
           <div class="carousel-inner">
             <div class="item active">
@@ -25,6 +25,26 @@
           <a href="#slider" class="right carousel-control" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
         </div>    
       </div>    
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div id="gallery" class="gallery">
+        sdfsd
+      </div>
+      <script id="template" type="x-tmpl-mustache">
+        {{#gallery}}
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+            <img src="img/visit/{{image}}">
+            </div>
+            <div class="caption">
+              <h3 class="text-center">{{destiny}}</h3>
+            </div>
+          </div>
+        {{/gallery}}
+      </script>
+    </div>
   </div>
   
 
