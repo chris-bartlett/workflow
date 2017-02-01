@@ -20,7 +20,8 @@ var SOURCEPATHS = {
 var APPPATH = {
   root: 'app/',
   css: 'app/css',
-  js: 'app/js'
+  js: 'app/js',
+  fonts: 'app/fonts'
 }
 
 //copy js files and delete them if deleted from source, also conact them into one and include the required files install via npm
@@ -57,6 +58,12 @@ gulp.task('sass', function() {
       .pipe(gulp.dest(APPPATH.css));
 });
 
+//copy the fonts folder
+gulp.task('moveFonts', function() {
+  gulp.src('./node_modules/bootstrap/dist/fonts/*.{eot,svg,ttf,woff,woff2}')
+    .pipe(gulp.dest(APPPATH.fonts));
+})
+
 //copy any html files from source to app and delete them if deleted from source
 gulp.task('copy', ['clean-html'], function() {
   gulp.src(SOURCEPATHS.htmlSource)
@@ -73,7 +80,7 @@ gulp.task('serve', ['sass'], function() {
 });
 
 //setup watch task to update the server if any sass files change - server will automatically update html changes
-gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts'], function() {
+gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'clean-scripts', 'scripts', 'moveFonts'], function() {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
   gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
   gulp.watch([SOURCEPATHS.jsSource], ['scripts']);    
