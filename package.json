@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/chris-bartlett/workflow#readme",
   "devDependencies": {
+    "browser-sync": "^2.18.7",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0"
   }
