@@ -14,6 +14,7 @@ var injectPartials = require('gulp-inject-partials');
 var minify = require('gulp-minify');
 var cssmin = require('gulp-cssmin');
 var rename = require('gulp-rename');
+var htmlmin = require('gulp-htmlmin');
 var reload = browserSync.reload;
 
 //setup sourcepaths and app path so don't need to keep typing them
@@ -36,7 +37,7 @@ var APPPATH = {
 
 /*  START PRODUCTION TASKS */
 
-//to run: gulp compress - used as separate task not every time
+//to run type: gulp compress - used as separate task not every time
 gulp.task('compress', function() {
   return gulp.src(SOURCEPATHS.jsSource)
     .pipe(concat('main.js'))
@@ -45,7 +46,7 @@ gulp.task('compress', function() {
     .pipe(gulp.dest(APPPATH.js));
 });
 
-//to run: gulp compresscss - used as separate task not every time
+//to run type: gulp compresscss - used as separate task not every time
 gulp.task('compresscss', function() {
   var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
   var sassFiles;
@@ -59,6 +60,15 @@ gulp.task('compresscss', function() {
       .pipe(rename({suffix: '.min'}))
       .pipe(gulp.dest(APPPATH.css));
 });
+
+//to run type: gulp minifyHtml - used as separate task not every time
+gulp.task('minifyHtml', function() {
+  return gulp.src(SOURCEPATHS.htmlSource)
+    .pipe(injectPartials())
+    .pipe(htmlmin({collapseWhitespace:true}))
+    .pipe(gulp.dest(APPPATH.root));
+});
+
 
 /*  END PRODUCTION TASKS */
 
@@ -144,3 +154,6 @@ gulp.task('watch', ['serve', 'sass', 'html', 'clean-html', 'clean-scripts', 'scr
 
 // running watch so serve and sass will run as well
 gulp.task('default', ['watch']);
+
+//to run production type: gulp production
+gulp.task('production', ['minifyHtml', 'compresscss', 'compress']);
