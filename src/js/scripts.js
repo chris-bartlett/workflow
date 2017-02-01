@@ -1,13 +1,13 @@
 global.jQuery = require('jquery');
 bootstrap = require('bootstrap');
-mustache = require('mustache');
+// mustache = require('mustache');
 
-jQuery(document).ready(function($) {
-  var jqxhr = $.getJSON('data.json', function() {
+// jQuery(document).ready(function($) {
+//   var jqxhr = $.getJSON('data.json', function() {
 
-  }).done(function(data) {
-    var template = $('#template').html();
-    var showTemplate = mustache.render(template, data);
-    $('#gallery').html(showTemplate);
-  });
+//   }).done(function(data) {
+//     var template = $('#template').html();
+//     var showTemplate = mustache.render(template, data);
+//     $('#gallery').html(showTemplate);
+//   });
 });
