@@ -8,9 +8,11 @@ $black:     #000;
 
 $bg-color:  $blue;
 
+
 $text-color: $black;
 $paragrah-font-size: 1.8rem;
-$heading-color: $yellow;
+$paragrah-font-family: Raleway, sans-serif;
+
 
 $nav-bg-color: $dark-blue;
 $menu-anchor-font-size: 1.4rem;
@@ -24,6 +26,8 @@ $heading-font-size: (
   h5: 24px,
   h6: 20px
 );
+$heading-font-family: Poiret One, cursive;
+$heading-color: $yellow;
 
 //visit
 $visit-border-color: $white;
@@ -41,3 +45,6 @@ $grid-max-width: 1200px;
 
 //buttons
 $btn-font-size: 16px;
+
+//footer
+$bg-footer-color:  $dark-blue;
