@@ -20,6 +20,7 @@ var reload = browserSync.reload;
 //setup sourcepaths and app path so don't need to keep typing them
 var SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
+  sassApp: 'src/scss/app.scss',
   htmlSource: 'src/*.html',
   htmlPartialSource: 'src/partial/*.html',
   jsSource: 'src/js/**',
@@ -50,7 +51,7 @@ gulp.task('compress', function() {
 gulp.task('compresscss', function() {
   var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
   var sassFiles;
-  sassFiles = gulp.src(SOURCEPATHS.sassSource)
+  sassFiles = gulp.src(SOURCEPATHS.sassApp)
     .pipe(autoprefixer())
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 
@@ -104,7 +105,7 @@ gulp.task('html', function() {
 gulp.task('sass', function() {
   var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
   var sassFiles;
-  sassFiles = gulp.src(SOURCEPATHS.sassSource)
+  sassFiles = gulp.src(SOURCEPATHS.sassApp)
     .pipe(autoprefixer())
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 

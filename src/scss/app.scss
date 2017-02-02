@@ -1,0 +1,11 @@
+@import 'variables';
+@import 'typography';
+@import 'layout';
+
+body {
+  background-color: $bg-color;
+}
+
+h1 {
+  color: $heading-color;
+}
